@@ -1,6 +1,6 @@
 {
   "name": "doku-payment-gateway",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A reusable and modular Doku Payment Gateway integration package",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
