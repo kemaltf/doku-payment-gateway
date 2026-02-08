@@ -98,3 +98,7 @@ export async function POST(req: NextRequest) {
 ## License
 
 MIT
+
+## Support
+
+If you find this project useful and would like to support its development, you can sponsor me on GitHub: [https://github.com/sponsors/kemaltf](https://github.com/sponsors/kemaltf)
