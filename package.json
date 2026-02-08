@@ -41,5 +41,9 @@
   "homepage": "https://github.com/kemaltf/doku-payment-gateway#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/kemaltf"
   }
 }
