@@ -30,5 +30,16 @@
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kemaltf/doku-payment-gateway.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kemaltf/doku-payment-gateway/issues"
+  },
+  "homepage": "https://github.com/kemaltf/doku-payment-gateway#readme",
+  "publishConfig": {
+    "access": "public"
   }
 }
