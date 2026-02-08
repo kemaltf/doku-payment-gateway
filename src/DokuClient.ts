@@ -136,11 +136,11 @@ export class DokuClient {
           result.order?.invoice_number,
         amount: result.response?.order?.amount || result.order?.amount,
       };
-    } catch (error) {
-      console.error("DOKU payment creation error:", error);
+    } catch (error: any) {
+      console.error("DOKU payment creation error:", error?.message || error);
       return {
         success: false,
-        message: "Internal server error",
+        message: error?.message || "Internal server error",
         details: error,
       };
     }
