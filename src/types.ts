@@ -198,39 +198,43 @@ export type DokuNotificationData =
 
 // Type guards
 export function isVirtualAccountNotification(
-  data: DokuNotificationData
+  data: DokuNotificationData,
 ): data is DokuVirtualAccountNotification {
   return data.service.id === "VIRTUAL_ACCOUNT";
 }
 
 export function isOnlineToOfflineNotification(
-  data: DokuNotificationData
+  data: DokuNotificationData,
 ): data is DokuOnlineToOfflineNotification {
   return data.service.id === "ONLINE_TO_OFFLINE";
 }
 
-export function isQrisNotification(data: DokuNotificationData): data is DokuQrisNotification {
+export function isQrisNotification(
+  data: DokuNotificationData,
+): data is DokuQrisNotification {
   return data.service.id === "QRIS";
 }
 
 export function isCreditCardNotification(
-  data: DokuNotificationData
+  data: DokuNotificationData,
 ): data is DokuCreditCardNotification {
   return data.service.id === "CREDIT_CARD";
 }
 
 export function isDirectDebitNotification(
-  data: DokuNotificationData
+  data: DokuNotificationData,
 ): data is DokuDirectDebitNotification {
   return data.service.id === "DIRECT_DEBIT";
 }
 
-export function isEmoneyNotification(data: DokuNotificationData): data is DokuEmoneyNotification {
+export function isEmoneyNotification(
+  data: DokuNotificationData,
+): data is DokuEmoneyNotification {
   return data.service.id === "EMONEY";
 }
 
 export function isPayLaterNotification(
-  data: DokuNotificationData
+  data: DokuNotificationData,
 ): data is DokuPayLaterNotification {
   return data.service.id === "PEER_TO_PEER";
 }
