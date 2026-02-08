@@ -10,7 +10,9 @@ export class DokuClient {
   constructor(config: DokuConfig) {
     const validatedConfig = ConfigSchema.parse(config);
     this.config = validatedConfig;
-    this.baseUrl = config.isProduction ? "https://api.doku.com" : "https://api-sandbox.doku.com";
+    this.baseUrl = config.isProduction
+      ? "https://api.doku.com"
+      : "https://api-sandbox.doku.com";
   }
 
   /**
@@ -20,7 +22,7 @@ export class DokuClient {
     requestId: string,
     requestTimestamp: string,
     requestTarget: string,
-    body: string
+    body: string,
   ) {
     const digest = generateDigest(body);
     const signature = generateSignature(
@@ -29,7 +31,7 @@ export class DokuClient {
       requestTarget,
       digest,
       this.config.secretKey,
-      requestTimestamp
+      requestTimestamp,
     );
 
     return {
@@ -44,7 +46,9 @@ export class DokuClient {
   /**
    * Creates a payment request to Doku
    */
-  async createPayment(paymentData: DokuPaymentRequest): Promise<DokuPaymentResponse> {
+  async createPayment(
+    paymentData: DokuPaymentRequest,
+  ): Promise<DokuPaymentResponse> {
     try {
       // Validate input
       const validatedData = PaymentRequestSchema.parse(paymentData);
@@ -85,7 +89,8 @@ export class DokuClient {
         },
         payment: {
           payment_due_date: expiredTime,
-          payment_method_types: validatedData.paymentMethodTypes || defaultPaymentMethods,
+          payment_method_types:
+            validatedData.paymentMethodTypes || defaultPaymentMethods,
         },
         customer: {
           id: validatedData.customerEmail || "GUEST-" + requestId.slice(0, 8),
@@ -100,14 +105,17 @@ export class DokuClient {
         requestId,
         requestTimestamp,
         requestTarget,
-        requestBodyString
+        requestBodyString,
       );
 
-      const response = await this.fetchWithRetry(`${this.baseUrl}${requestTarget}`, {
-        method: "POST",
-        headers,
-        body: requestBodyString,
-      });
+      const response = await this.fetchWithRetry(
+        `${this.baseUrl}${requestTarget}`,
+        {
+          method: "POST",
+          headers,
+          body: requestBodyString,
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -123,7 +131,9 @@ export class DokuClient {
       return {
         success: true,
         paymentUrl: result.response?.payment?.url || result.payment?.url,
-        invoiceNumber: result.response?.order?.invoice_number || result.order?.invoice_number,
+        invoiceNumber:
+          result.response?.order?.invoice_number ||
+          result.order?.invoice_number,
         amount: result.response?.order?.amount || result.order?.amount,
       };
     } catch (error) {
@@ -143,7 +153,7 @@ export class DokuClient {
     body: string,
     receivedSignature: string,
     timestamp: string,
-    requestId: string
+    requestId: string,
   ): boolean {
     if (!receivedSignature || !timestamp || !requestId) {
       return false;
@@ -170,9 +180,14 @@ export class DokuClient {
       requestId: string;
       clientId: string;
     },
-    requestTarget: string
+    requestTarget: string,
   ): boolean {
-    const { signature: receivedSignature, timestamp, requestId, clientId } = headers;
+    const {
+      signature: receivedSignature,
+      timestamp,
+      requestId,
+      clientId,
+    } = headers;
 
     if (!receivedSignature || !timestamp || !requestId || !clientId) {
       return false;
@@ -189,7 +204,7 @@ export class DokuClient {
       requestTarget,
       digest,
       this.config.secretKey,
-      timestamp
+      timestamp,
     );
 
     return calculatedSignature === receivedSignature;
@@ -198,7 +213,11 @@ export class DokuClient {
   /**
    * Simple retry mechanism for fetch
    */
-  private async fetchWithRetry(url: string, options: RequestInit, retries = 3): Promise<Response> {
+  private async fetchWithRetry(
+    url: string,
+    options: RequestInit,
+    retries = 3,
+  ): Promise<Response> {
     try {
       const response = await fetch(url, options);
       if (response.ok) return response;

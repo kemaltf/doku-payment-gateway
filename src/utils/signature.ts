@@ -13,7 +13,7 @@ export function generateSignature(
   requestTarget: string,
   digest: string,
   secretKey: string,
-  requestTimestamp: string
+  requestTimestamp: string,
 ): string {
   // Prepare Signature Component sesuai dokumentasi
   let componentSignature = "Client-Id:" + clientId;

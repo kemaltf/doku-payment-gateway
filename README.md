@@ -61,7 +61,9 @@ if (payment.success) {
 import { NextRequest, NextResponse } from "next/server";
 import { DokuClient } from "doku-payment-gateway";
 
-const doku = new DokuClient({ /* config */ });
+const doku = new DokuClient({
+  /* config */
+});
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -73,7 +75,7 @@ export async function POST(req: NextRequest) {
   const isValid = doku.validateSignature(
     body,
     { signature, timestamp, requestId, clientId },
-    "/api/doku/callback" // The path of this endpoint
+    "/api/doku/callback", // The path of this endpoint
   );
 
   if (!isValid) {
@@ -82,17 +84,17 @@ export async function POST(req: NextRequest) {
 
   const notification = JSON.parse(body);
   // Process notification...
-  
+
   return NextResponse.json({ success: true });
 }
 ```
 
 ## Configuration
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `clientId` | string | Your Doku Client ID |
-| `secretKey` | string | Your Doku Secret Key |
+| Option         | Type    | Description                              |
+| -------------- | ------- | ---------------------------------------- |
+| `clientId`     | string  | Your Doku Client ID                      |
+| `secretKey`    | string  | Your Doku Secret Key                     |
 | `isProduction` | boolean | Set to `true` for production environment |
 
 ## License
